@@ -12,24 +12,30 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'))
 
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
     console.log(__dirname)
     res.sendFile(path.join(__dirname, 'public/index.html'))
 })
-app.get('/notes', (req, res)=>{
+app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/notes.html'))
 })
 
-app.get('/api/notes', (req, res)=>{
+app.get('/api/notes', (req, res) => {
     res.sendFile(path.join(__dirname, 'db/db.json'))
 })
-app.post('/api/notes', (req, res)=>{
+app.post('/api/notes', (req, res) => {
     console.log(req.body)
 
-    fs.readFile('./db/db.json')
+    fs.readFile('./db/db.json','utf8', (err, data) => {
+        if (err){
+            console.log(err)
+        }
+        const notes = data
+        console.log(notes)
+    })
 })
 
 
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log(`listening on http://localhost:${PORT}`)
 })
