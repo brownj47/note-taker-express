@@ -25,13 +25,19 @@ app.get('/api/notes', (req, res) => {
 })
 app.post('/api/notes', (req, res) => {
     console.log(req.body)
-
     fs.readFile('./db/db.json','utf8', (err, data) => {
         if (err){
             console.log(err)
         }
-        const notes = data
+        const notes = JSON.parse(data)
+        const newNote = {
+            title:req.body.title, 
+            text: req.body.text, 
+            id: notes.length+1
+        }
+        notes.push(newNote)
         console.log(notes)
+        fs.writeFile('./db/db.json', JSON.stringify(notes), err => console.log(err))
     })
 })
 
