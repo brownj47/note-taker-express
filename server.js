@@ -41,6 +41,22 @@ app.post('/api/notes', (req, res) => {
     })
 })
 
+app.delete('/api/notes/:id', (req, res)=> {
+    console.log(req.params.id)
+    const clickedID = Number(req.params.id)
+    fs.readFile('./db/db.json','utf8', (err, data) => {
+        if (err){
+            console.log(err)
+        }
+        const notes = JSON.parse(data)
+        const notesFiltered = notes.filter(function(note){
+            return note.id !== clickedID
+        })
+        console.log(notesFiltered)
+        fs.writeFile('./db/db.json', JSON.stringify(notesFiltered), err => console.log(err))
+    })
+})
+
 
 app.listen(PORT, () => {
     console.log(`listening on http://localhost:${PORT}`)
