@@ -39,6 +39,7 @@ app.post('/api/notes', (req, res) => {
         console.log(notes)
         fs.writeFile('./db/db.json', JSON.stringify(notes), err => console.log(err))
     })
+    res.json({ok:true})
 })
 
 app.delete('/api/notes/:id', (req, res)=> {
@@ -55,6 +56,7 @@ app.delete('/api/notes/:id', (req, res)=> {
         console.log(notesFiltered)
         fs.writeFile('./db/db.json', JSON.stringify(notesFiltered), err => console.log(err))
     })
+    res.json({ok:true})
 })
 
 
